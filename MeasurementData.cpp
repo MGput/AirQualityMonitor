@@ -1,45 +1,30 @@
-#include <string>
-#include <vector>
+#include "MeasurementData.h"
 
-using namespace std;
+Values::Values(string date, double value) :
+	date_(date),
+	value_(value)
+{}
 
-class Values {
-protected:
-	string date_;
-	double value_;
+string Values::getDate() const { return date_; }
 
-public:
-	Values(string date, double value) :
-		date_(date),
-		value_(value)
-	{}
+double Values::getValue() const { return value_; }
 
-	string getDate() const { return date_; }
-	double getValue() const { return value_; }
-};
 
-class Data {
-private:
-	string key_;
-	vector<Values*> values_;
+Data::Data(string key) : key_(key){}
 
-public:
-	Data(string key) :
-		key_(key)
-	{}
+void Data::addValue(string date, double value) {
+	values_.push_back(new Values(date, value));
+}
 
-	void addValue(string date, double value) {
-		values_.push_back(new Values(date, value));
+string Data::getKey() const { return key_; }
+
+const vector<Values*>& Data::getValues() const { return values_; }
+
+unsigned int Data::getNumberOfValues() const { return values_.size(); }
+
+Data::~Data() {
+	for (Values* value : values_) {
+		delete value;
 	}
-
-	string getKey() const { return key_; }
-	const vector<Values*>& getValues() const { return values_; }
-	unsigned int getNumberOfValues() const { return values_.size(); }
-
-	~Data() {
-		for (Values* value : values_) {
-			delete value;
-		}
-		values_.clear();
-	}
-};
+	values_.clear();
+}
