@@ -127,10 +127,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AirQualityIndex.cpp" />
     <ClCompile Include="APIcontroller.cpp" />
     <ClCompile Include="Station.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MeasurmentStand.cpp" />
+    <ClCompile Include="MeasurementData.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="APIcontroller.h" />
