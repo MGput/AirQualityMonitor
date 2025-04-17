@@ -26,6 +26,21 @@ Station::Station(unsigned short id, string stationName, double gegrLat, double g
 	Location(gegrLat, gegrLon, CityId, nameCity, communeName, districtName, provinceName, addressStreet)
 {}
 
+Station::Station(const json& StationEntry){
+	Station::Station(
+		StationEntry["id"],
+		StationEntry["stationName"],
+		StationEntry["gegrLat"],
+		StationEntry["gegrLon"],
+		StationEntry["city"]["id"],
+		StationEntry["city"]["name"],
+		StationEntry["city"]["commune"]["communeName"],
+		StationEntry["city"]["commune"]["districtName"],
+		StationEntry["city"]["commune"]["provinceName"],
+		StationEntry["addressStreet"]
+	);
+}
+
 // Metody do pobierania danych z zewn¹trz
 unsigned short Station::getStationId() const { return id_; }
 string Station::getStationName() const { return stationName_; }

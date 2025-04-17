@@ -2,8 +2,10 @@
 #include "MeasurmentStand.h"
 #include <string>
 #include <vector>
+#include <nlohmann/json.hpp>
 
 using namespace std;
+using json = nlohmann::json;
 
 class Commune {
 protected:
@@ -39,6 +41,8 @@ private:
 public:
 	Station(unsigned short id, string stationName, double gegrLat, double gegrLon, unsigned short CityId,
 	string nameCity, string communeName, string districtName, string provinceName, string addressStreet);
+
+	Station(const json& StationEntry);
 
 	// Metody do pobierania danych z zewn¹trz
 	unsigned short getStationId() const;
