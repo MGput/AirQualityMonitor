@@ -28,21 +28,23 @@ Station::Station(unsigned short id, string stationName, string gegrLat, string g
 {}
 
 Station::Station(const json& StationEntry):
-id_(StationEntry["id"].get<unsigned short>()),
-stationName_(StationEntry["stationName"].get<string>()),
-Location(
-	StationEntry["gegrLat"].get<string>(),
-	StationEntry["gegrLon"].get<string>(),
-	StationEntry["city"]["id"].get<unsigned short>(),
-	StationEntry["city"]["name"].get<string>(),
-	StationEntry["city"]["commune"]["communeName"].get<string>(),
-	StationEntry["city"]["commune"]["districtName"].get<string>(),
-	StationEntry["city"]["commune"]["provinceName"].get<string>(),
-	StationEntry.contains("addressStreet") && !StationEntry["addressStreet"].is_null() 
-		? StationEntry["addressStreet"].get<string>() 
-		: "BRAK"
-)
-{
+	id_(StationEntry["id"].get<unsigned short>()),
+	stationName_(StationEntry["stationName"].get<string>()),
+	Location(
+		StationEntry["gegrLat"].get<string>(),
+		StationEntry["gegrLon"].get<string>(),
+		StationEntry["city"]["id"].get<unsigned short>(),
+		StationEntry["city"]["name"].get<string>(),
+		StationEntry["city"]["commune"]["communeName"].get<string>(),
+		StationEntry["city"]["commune"]["districtName"].get<string>(),
+		StationEntry["city"]["commune"]["provinceName"].get<string>(),
+		StationEntry.contains("addressStreet") && !StationEntry["addressStreet"].is_null() 
+			? StationEntry["addressStreet"].get<string>() 
+			: "BRAK"
+	)
+{}
+
+void Station::loadStands() {
 	GIOS_APImanagement* API = new GIOS_APImanagement();
 	for (auto& stand : API->getSensorList(id_)) {
 		MeasurmentStand* measurmentStand = new MeasurmentStand(stand);

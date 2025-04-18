@@ -45,6 +45,8 @@ public:
 
 	Station(const json& StationEntry);
 
+	void loadStands();
+
 	// Metody do pobierania danych z zewnątrz
 	unsigned short getStationId() const;
 	string getStationName() const;
