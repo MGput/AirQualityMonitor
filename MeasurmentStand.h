@@ -33,4 +33,5 @@ public:
     string getParamFormula() const;
     string getParamCode() const;
     unsigned short getIdParam() const;
+    ~MeasurmentStand();
 };

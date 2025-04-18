@@ -37,3 +37,5 @@ string MeasurmentStand::getParamFormula() const { return paramFormula_; }
 string MeasurmentStand::getParamCode() const { return paramCode_; }
 
 unsigned short MeasurmentStand::getIdParam() const { return idParam_; }
+
+MeasurmentStand::~MeasurmentStand() { delete standData_; }
