@@ -23,8 +23,8 @@ protected:
 
 class GIOS_APImanagement : public CurlServiceFundaments {
 public:
-    json getStationList();                       // API zapytanie o listê stacji
-    json getSensorList(int stationId);           // API zapytanie o listê sensorów
+    json getStationList();                       // API zapytanie o listÄ™ stacji
+    json getSensorList(int stationId);           // API zapytanie o listÄ™ sensorÃ³w
     json getSensorData(int sensorId);            // API zapytanie o dane z sensora
-    json getAirQualityIndex(int stationId);      // API zapytanie o indeks jakoœci powietrza
+    json getAirQualityIndex(int stationId);      // API zapytanie o indeks jakoÅ›ci powietrza
 };

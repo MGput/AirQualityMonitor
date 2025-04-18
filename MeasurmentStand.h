@@ -2,6 +2,7 @@
 
 #include <string>
 #include <nlohmann/json.hpp>
+#include <locale.h>
 
 using namespace std;
 using json = nlohmann::json;
@@ -22,7 +23,7 @@ private:
 public:
     MeasurmentStand(unsigned short id, string paramName, string paramFormula, string paramCode, unsigned short idParam);
     MeasurmentStand(const json& StandEntry);
-    // Metody do pobierania danych z zewn¹trz
+    // Metody do pobierania danych z zewnÄ…trz
     unsigned short getId() const;
     string getParamName() const;
     string getParamFormula() const;

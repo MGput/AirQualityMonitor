@@ -51,7 +51,7 @@ Location(
 	delete API;
 }
 
-// Metody do pobierania danych z zewn¹trz
+// Metody do pobierania danych z zewnÄ…trz
 unsigned short Station::getStationId() const { return id_; }
 string Station::getStationName() const { return stationName_; }
 void Station::assignCoordinates(string (&Coordinates)[2]) const {
@@ -72,18 +72,28 @@ void Station::addMeasurmentStand(MeasurmentStand* measurmentStand) {
 
 void Station::testDisplayData()
 const {
-	cout << "===================================================" << endl;
-	cout << "Id stacji: " << id_ << endl;
-	cout << "Stacja: " << stationName_ << endl;
-	cout << "Szerokoœæ geograficzna: " << gegrLat_ << endl;
-	cout << "D³ugoœæ geograficzna: " << gegrLon_ << endl;
-	cout << "Id miasta: " << City::id_ << endl;
-	cout << "Nazwa miasta: " << City::name_ << endl;
-	cout << "Nazwa gminy: " << communeName_ << endl;
-	cout << "Nazwa powiatu: " << districtName_ << endl;
-	cout << "Nazwa województwa: " << provinceName_ << endl;
-	if(addressStreet_ != "BRAK") cout << "Ulica: " << addressStreet_ << endl;
-	cout << "===================================================" << endl << endl;
+	cout << "===============================================================" << endl;
+	cout << "Id stacji:			" << id_ << endl;
+	cout << "Stacja:				" << stationName_ << endl;
+	cout << "SzerokoÅ›Ä‡ geograficzna:		" << gegrLat_ << endl;
+	cout << "DÅ‚ugoÅ›Ä‡ geograficzna:		" << gegrLon_ << endl;
+	cout << "Id miasta:			" << City::id_ << endl;
+	cout << "Nazwa miasta:			" << City::name_ << endl;
+	cout << "Nazwa gminy:			" << communeName_ << endl;
+	cout << "Nazwa powiatu:			" << districtName_ << endl;
+	cout << "Nazwa wojewÃ³dztwa:		" << provinceName_ << endl;
+	if(addressStreet_ != "BRAK") cout << "Ulica:				" << addressStreet_ << endl;
+	cout << "---------------------------------------------------------------" << endl;
+	cout << "Stanowiska pomiarowe na danej stacji (" << measurmentStands_.size() << "): " << endl;
+	for (size_t i = 0; i < measurmentStands_.size(); ++i) {
+		cout << "	" << i + 1 << ". " << measurmentStands_[i]->getParamName() << endl;
+		cout << "		ID:			" << measurmentStands_[i]->getId() << endl;
+		cout << "		Nazwa:			" << measurmentStands_[i]->getParamName() << endl;
+		cout << "		WzÃ³r:			" << measurmentStands_[i]->getParamFormula() << endl;
+		cout << "		Kod:			" << measurmentStands_[i]->getParamCode() << endl;
+		cout << "		IdParametru:		" << measurmentStands_[i]->getIdParam() << endl << endl;
+	}
+	cout << "===============================================================" << endl << endl;
 }
 
 const vector<MeasurmentStand*>& Station::getMeasurmentStands() const { return measurmentStands_; }

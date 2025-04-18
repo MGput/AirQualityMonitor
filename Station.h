@@ -45,7 +45,7 @@ public:
 
 	Station(const json& StationEntry);
 
-	// Metody do pobierania danych z zewn¹trz
+	// Metody do pobierania danych z zewnÄ…trz
 	unsigned short getStationId() const;
 	string getStationName() const;
 	void assignCoordinates(string(&Coordinates)[2]) const;

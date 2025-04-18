@@ -7,7 +7,7 @@ using json = nlohmann::json;
 void CurlServiceFundaments::initializeCurl() {
     curl_global_init(CURL_GLOBAL_DEFAULT);                                          // Inicjalizacja curl
     curl = curl_easy_init();                                                        // Inicjalizacja uchwytu
-    if (!curl) cerr << "B³¹d inicjalizacji CURL" << endl;
+    if (!curl) cerr << "BÅ‚Ä…d inicjalizacji CURL" << endl;
 }
 
 CurlServiceFundaments::CurlServiceFundaments() {
@@ -29,11 +29,11 @@ json CurlServiceFundaments::makeRequest(const string& url) {
     if (curl) {
         string responseSingle;
         curl_easy_setopt(curl, CURLOPT_URL, url.c_str());                           // Ustawienie adresu URL
-        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);               // Ustawienie funkcji i wskaŸnika do odbierania danych
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);               // Ustawienie funkcji i wskaÅºnika do odbierania danych
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &responseSingle);
         CURLcode reqResult = curl_easy_perform(curl);                               // Zapytanie
         if (reqResult != CURLE_OK) {
-            cerr << "B³¹d zapytania: " << curl_easy_strerror(reqResult) << endl;
+            cerr << "BÅ‚Ä…d zapytania: " << curl_easy_strerror(reqResult) << endl;
         }
         else {
             long HTTPstatus = 0;
@@ -42,12 +42,12 @@ json CurlServiceFundaments::makeRequest(const string& url) {
                 try {
                     responseFinal = json::parse(responseSingle);
                 }
-                catch (const json::parse_error& e) {                                // Obs³uga b³êdów JSON
-                    cerr << "B³¹d parsowania JSON: " << e.what() << endl;
+                catch (const json::parse_error& e) {                                // ObsÅ‚uga bÅ‚Ä™dÃ³w JSON
+                    cerr << "BÅ‚Ä…d parsowania JSON: " << e.what() << endl;
                 }
             }
-            else {                                                                  // Obs³uga b³êdów HTTP
-                cerr << "B³¹d HTTP " << HTTPstatus << endl;
+            else {                                                                  // ObsÅ‚uga bÅ‚Ä™dÃ³w HTTP
+                cerr << "BÅ‚Ä…d HTTP " << HTTPstatus << endl;
             }
         }
     }

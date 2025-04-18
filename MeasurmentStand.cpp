@@ -1,6 +1,5 @@
 #include "MeasurmentStand.h"
 
-#include <string>
 using namespace std;
 
 Parameters::Parameters(string paramName, string paramFormula, string paramCode, unsigned short idParam) :
