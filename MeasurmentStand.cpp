@@ -23,7 +23,10 @@ MeasurmentStand::MeasurmentStand(const json& StandEntry) :
 		StandEntry["param"]["paramCode"].get<string>(),
 		StandEntry["param"]["idParam"].get<unsigned short>()
 	)
-{}
+{
+	GIOS_APImanagement* API = new GIOS_APImanagement();
+	standData_ = new Data(API->getSensorData(id_));
+}
 
 unsigned short MeasurmentStand::getId() const { return id_; }
 

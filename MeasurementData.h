@@ -2,7 +2,9 @@
 
 #include <string>
 #include <vector>
+#include <nlohmann/json.hpp>
 using namespace std;
+using json = nlohmann::json;
 
 class Values {
 protected:
@@ -20,9 +22,9 @@ private:
     vector<Values*> values_;
 public:
     Data(string key);
+    Data(const json& DataEntry);
     void addValue(string date, double value);
     string getKey() const;
     const vector<Values*>& getValues() const;
-    unsigned int getNumberOfValues() const;
     ~Data();
 };

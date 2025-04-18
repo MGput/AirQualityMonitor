@@ -92,6 +92,10 @@ const {
 		cout << "		Wzór:			" << measurmentStands_[i]->getParamFormula() << endl;
 		cout << "		Kod:			" << measurmentStands_[i]->getParamCode() << endl;
 		cout << "		IdParametru:		" << measurmentStands_[i]->getIdParam() << endl << endl;
+		cout << "		Wpisy:" << endl;
+		for (const auto& value : measurmentStands_[i]->getStandData()->getValues()) {
+			cout << "			" << value->getValue() << " - " << value->getDate() << endl;
+		}
 	}
 	cout << "===============================================================" << endl << endl;
 }
