@@ -12,7 +12,8 @@ Parameters::Parameters(string paramName, string paramFormula, string paramCode, 
 
 MeasurmentStand::MeasurmentStand(unsigned short id, string paramName, string paramFormula, string paramCode, unsigned short idParam) :
 	id_(id),
-	Parameters(paramName, paramFormula, paramCode, idParam)
+	Parameters(paramName, paramFormula, paramCode, idParam),
+	standData_(nullptr)
 {}
 
 MeasurmentStand::MeasurmentStand(const json& StandEntry) :
