@@ -33,9 +33,6 @@
     <ClCompile Include="MeasurementData.cpp">
       <Filter>Pliki źródłowe\DataTypesClasses</Filter>
     </ClCompile>
-    <ClCompile Include="AirQualityIndex.cpp">
-      <Filter>Pliki źródłowe\DataTypesClasses</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="APIcontroller.h">

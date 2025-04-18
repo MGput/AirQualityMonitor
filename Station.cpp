@@ -72,6 +72,7 @@ void Station::addMeasurmentStand(MeasurmentStand* measurmentStand) {
 	measurmentStands_.push_back(measurmentStand);
 }
 
+/*
 void Station::testDisplayData()
 const {
 	cout << "===============================================================" << endl;
@@ -100,6 +101,57 @@ const {
 		}
 	}
 	cout << "===============================================================" << endl << endl;
+}
+*/
+
+void Station::displayStationData() const {
+	cout << "===============================================================" << endl;
+	cout << "Id stacji:			" << id_ << endl;
+	cout << "Stacja:				" << stationName_ << endl;
+	cout << "Szerokość geograficzna:		" << gegrLat_ << endl;
+	cout << "Długość geograficzna:		" << gegrLon_ << endl;
+	cout << "Id miasta:			" << City::id_ << endl;
+	cout << "Nazwa miasta:			" << City::name_ << endl;
+	cout << "Nazwa gminy:			" << communeName_ << endl;
+	cout << "Nazwa powiatu:			" << districtName_ << endl;
+	cout << "Nazwa województwa:		" << provinceName_ << endl;
+	if (addressStreet_ != "BRAK") cout << "Ulica:				" << addressStreet_ << endl;
+	cout << "===============================================================" << endl;
+}
+
+bool Station::checkForInfo(string searchText) const {
+	string searchTextLower = searchText;
+	transform(searchTextLower.begin(), searchTextLower.end(), searchTextLower.begin(), ::tolower);
+
+	auto containsText = [&searchTextLower](const string& field) {
+		string fieldLower = field;
+		transform(fieldLower.begin(), fieldLower.end(), fieldLower.begin(), ::tolower);
+		return fieldLower.find(searchTextLower) != string::npos;
+	};
+
+	if (containsText(stationName_)) return true;
+	if (containsText(gegrLat_)) return true;
+	if (containsText(gegrLon_)) return true;
+	if (containsText(City::name_)) return true;
+	if (containsText(communeName_)) return true;
+	if (containsText(districtName_)) return true;
+	if (containsText(provinceName_)) return true;
+	if (containsText(addressStreet_)) return true;
+	return false;
+}
+
+MeasurmentStand* Station::filteredMeasureStand(const string& pollutionType) {
+	MeasurmentStand* filteredStand;
+	for (auto& stand : measurmentStands_) {
+		cout << pollutionType << " = " << stand->getParamFormula() << " ?		";
+		if (stand->getParamFormula() == pollutionType) {
+			filteredStand = new MeasurmentStand(stand);
+			cout << "TAK" << endl;
+			return filteredStand;
+		}
+		else cout << "NIE" << endl;
+	}
+	return nullptr;
 }
 
 const vector<MeasurmentStand*>& Station::getMeasurmentStands() const { return measurmentStands_; }

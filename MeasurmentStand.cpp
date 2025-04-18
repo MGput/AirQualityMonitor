@@ -39,4 +39,18 @@ string MeasurmentStand::getParamCode() const { return paramCode_; }
 
 unsigned short MeasurmentStand::getIdParam() const { return idParam_; }
 
+void MeasurmentStand::displayStandInfo() const {
+	cout << "	-------------------------------------------------------" << endl;
+	cout << "	Id stanowiska:			" << id_ << endl;
+	cout << "	Nazwa parametru:		" << paramName_ << endl;
+	cout << "	Wzór:				" << paramFormula_ << endl;
+	cout << "	Kod:				" << paramCode_ << endl;
+	cout << "	IdParametru:			" << idParam_ << endl;
+	cout << "	-------------------------------------------------------" << endl;
+}
+
+Data* MeasurmentStand::getStandData() const {
+	return standData_;
+}
+
 MeasurmentStand::~MeasurmentStand() { delete standData_; }

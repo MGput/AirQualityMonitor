@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <nlohmann/json.hpp>
+#include <algorithm>
 
 using namespace std;
 using json = nlohmann::json;
@@ -58,10 +59,15 @@ public:
 	string getProvinceName() const;
 	string getAddressStreet() const;
 
-	void testDisplayData() const;
+	//void testDisplayData() const;
+	void displayStationData() const;
 
 	//Metoda dodawania stanowisk pomiarowych do stacji
 	void addMeasurmentStand(MeasurmentStand* measurmentStand);
+
+	bool checkForInfo(string searchText) const;
+
+	MeasurmentStand* filteredMeasureStand(const string& pollutionType);
 
 	const vector<MeasurmentStand*>& getMeasurmentStands() const;
 

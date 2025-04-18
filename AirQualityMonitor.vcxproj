@@ -127,7 +127,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AirQualityIndex.cpp" />
     <ClCompile Include="APIcontroller.cpp" />
     <ClCompile Include="Station.cpp" />
     <ClCompile Include="main.cpp" />
