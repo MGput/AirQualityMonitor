@@ -1,5 +1,6 @@
 #pragma once
 #include "MeasurmentStand.h"
+#include <iostream>
 #include <string>
 #include <vector>
 #include <nlohmann/json.hpp>
@@ -26,11 +27,11 @@ public:
 
 class Location : public City {
 protected:
-	double gegrLat_;
-	double gegrLon_;
+	string gegrLat_;
+	string gegrLon_;
 	string addressStreet_;
 public:
-	Location(double gegrLat, double gegrLon, unsigned short id, string name, string communeName, string districtName, string provinceName, string addressStreet);
+	Location(string gegrLat, string gegrLon, unsigned short id, string name, string communeName, string districtName, string provinceName, string addressStreet);
 };
 
 class Station : private Location {
@@ -39,7 +40,7 @@ private:
 	string stationName_;
 	vector<MeasurmentStand*> measurmentStands_;
 public:
-	Station(unsigned short id, string stationName, double gegrLat, double gegrLon, unsigned short CityId,
+	Station(unsigned short id, string stationName, string gegrLat, string gegrLon, unsigned short CityId,
 	string nameCity, string communeName, string districtName, string provinceName, string addressStreet);
 
 	Station(const json& StationEntry);
@@ -47,13 +48,15 @@ public:
 	// Metody do pobierania danych z zewn¹trz
 	unsigned short getStationId() const;
 	string getStationName() const;
-	void assignCoordinates(double(&Coordinates)[2]) const;
+	void assignCoordinates(string(&Coordinates)[2]) const;
 	unsigned short getCityId() const;
 	string getCityName() const;
 	string getCommuneName() const;
 	string getDistrictName() const;
 	string getProvinceName() const;
 	string getAddressStreet() const;
+
+	void testDisplayData() const;
 
 	//Metoda dodawania stanowisk pomiarowych do stacji
 	void addMeasurmentStand(MeasurmentStand* measurmentStand);

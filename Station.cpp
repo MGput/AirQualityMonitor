@@ -1,4 +1,5 @@
 #include "Station.h"
+#include "APIcontroller.h"
 
 Commune::Commune(string communeName, string districtName, string provinceName) :
 	communeName_(communeName),
@@ -12,39 +13,48 @@ City::City(unsigned short id, string name, string communeName, string districtNa
 	Commune(communeName, districtName, provinceName)
 {}
 
-Location::Location(double gegrLat, double gegrLon, unsigned short id, string name, string communeName, string districtName, string provinceName, string addressStreet) :
+Location::Location(string gegrLat, string gegrLon, unsigned short id, string name, string communeName, string districtName, string provinceName, string addressStreet) :
 	gegrLat_(gegrLat),
 	gegrLon_(gegrLon),
 	City(id, name, communeName, districtName, provinceName),
 	addressStreet_(addressStreet)
 {}
 
-Station::Station(unsigned short id, string stationName, double gegrLat, double gegrLon, unsigned short CityId,
+Station::Station(unsigned short id, string stationName, string gegrLat, string gegrLon, unsigned short CityId,
 	string nameCity, string communeName, string districtName, string provinceName, string addressStreet) :
 	id_(id),
 	stationName_(stationName),
 	Location(gegrLat, gegrLon, CityId, nameCity, communeName, districtName, provinceName, addressStreet)
 {}
 
-Station::Station(const json& StationEntry){
-	Station::Station(
-		StationEntry["id"],
-		StationEntry["stationName"],
-		StationEntry["gegrLat"],
-		StationEntry["gegrLon"],
-		StationEntry["city"]["id"],
-		StationEntry["city"]["name"],
-		StationEntry["city"]["commune"]["communeName"],
-		StationEntry["city"]["commune"]["districtName"],
-		StationEntry["city"]["commune"]["provinceName"],
-		StationEntry["addressStreet"]
-	);
+Station::Station(const json& StationEntry):
+id_(StationEntry["id"].get<unsigned short>()),
+stationName_(StationEntry["stationName"].get<string>()),
+Location(
+	StationEntry["gegrLat"].get<string>(),
+	StationEntry["gegrLon"].get<string>(),
+	StationEntry["city"]["id"].get<unsigned short>(),
+	StationEntry["city"]["name"].get<string>(),
+	StationEntry["city"]["commune"]["communeName"].get<string>(),
+	StationEntry["city"]["commune"]["districtName"].get<string>(),
+	StationEntry["city"]["commune"]["provinceName"].get<string>(),
+	StationEntry.contains("addressStreet") && !StationEntry["addressStreet"].is_null() 
+		? StationEntry["addressStreet"].get<string>() 
+		: "BRAK"
+)
+{
+	GIOS_APImanagement* API = new GIOS_APImanagement();
+	for (auto& stand : API->getSensorList(id_)) {
+		MeasurmentStand* measurmentStand = new MeasurmentStand(stand);
+		addMeasurmentStand(measurmentStand);
+	}
+	delete API;
 }
 
 // Metody do pobierania danych z zewn¹trz
 unsigned short Station::getStationId() const { return id_; }
 string Station::getStationName() const { return stationName_; }
-void Station::assignCoordinates(double (&Coordinates)[2]) const {
+void Station::assignCoordinates(string (&Coordinates)[2]) const {
 	Coordinates[0] = gegrLat_;
 	Coordinates[1] = gegrLon_;
 }
@@ -58,6 +68,22 @@ string Station::getAddressStreet() const { return addressStreet_; }
 //Metoda dodawania stanowisk pomiarowych do stacji
 void Station::addMeasurmentStand(MeasurmentStand* measurmentStand) {
 	measurmentStands_.push_back(measurmentStand);
+}
+
+void Station::testDisplayData()
+const {
+	cout << "===================================================" << endl;
+	cout << "Id stacji: " << id_ << endl;
+	cout << "Stacja: " << stationName_ << endl;
+	cout << "Szerokoœæ geograficzna: " << gegrLat_ << endl;
+	cout << "D³ugoœæ geograficzna: " << gegrLon_ << endl;
+	cout << "Id miasta: " << City::id_ << endl;
+	cout << "Nazwa miasta: " << City::name_ << endl;
+	cout << "Nazwa gminy: " << communeName_ << endl;
+	cout << "Nazwa powiatu: " << districtName_ << endl;
+	cout << "Nazwa województwa: " << provinceName_ << endl;
+	if(addressStreet_ != "BRAK") cout << "Ulica: " << addressStreet_ << endl;
+	cout << "===================================================" << endl << endl;
 }
 
 const vector<MeasurmentStand*>& Station::getMeasurmentStands() const { return measurmentStands_; }

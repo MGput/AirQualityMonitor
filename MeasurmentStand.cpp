@@ -16,6 +16,16 @@ MeasurmentStand::MeasurmentStand(unsigned short id, string paramName, string par
 	Parameters(paramName, paramFormula, paramCode, idParam)
 {}
 
+MeasurmentStand::MeasurmentStand(const json& StandEntry) :
+	id_(StandEntry["id"].get<unsigned short>()),
+	Parameters(
+		StandEntry["param"]["paramName"].get<string>(),
+		StandEntry["param"]["paramFormula"].get<string>(),
+		StandEntry["param"]["paramCode"].get<string>(),
+		StandEntry["param"]["idParam"].get<unsigned short>()
+	)
+{}
+
 unsigned short MeasurmentStand::getId() const { return id_; }
 
 string MeasurmentStand::getParamName() const { return paramName_; }

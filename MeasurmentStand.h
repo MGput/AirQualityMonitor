@@ -1,7 +1,10 @@
 #pragma once
 
 #include <string>
+#include <nlohmann/json.hpp>
+
 using namespace std;
+using json = nlohmann::json;
 
 class Parameters {
 protected:
@@ -18,6 +21,7 @@ private:
     unsigned short id_;
 public:
     MeasurmentStand(unsigned short id, string paramName, string paramFormula, string paramCode, unsigned short idParam);
+    MeasurmentStand(const json& StandEntry);
     // Metody do pobierania danych z zewn¹trz
     unsigned short getId() const;
     string getParamName() const;
