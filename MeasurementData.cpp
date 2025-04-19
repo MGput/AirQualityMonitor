@@ -26,6 +26,14 @@ Data::Data(const json& DataEntry) :
 	}
 }
 
+Data::Data(const Data& other) :
+	key_(other.key_)
+{
+	for (const Values* value : other.values_) {
+		values_.push_back(new Values(value->getDate(), value->getValue()));
+	}
+}
+
 void Data::addValue(string date, double value) {
 	values_.push_back(new Values(date, value));
 }

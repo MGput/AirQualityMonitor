@@ -23,6 +23,7 @@ private:
 public:
     Data(string key);
     Data(const json& DataEntry);
+    Data(const Data& other);
     void addValue(string date, double value);
     string getKey() const;
     const vector<Values*>& getValues() const;

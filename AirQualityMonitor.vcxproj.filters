@@ -16,6 +16,9 @@
     <Filter Include="Pliki źródłowe\DataTypesClasses">
       <UniqueIdentifier>{1a94e0b7-4204-4dbc-b98f-0236c0427561}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Pliki źródłowe\GlobalMethods">
+      <UniqueIdentifier>{e0d7aa7e-bea6-4a86-89dc-21ecd240d23d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="APIcontroller.cpp">
@@ -32,6 +35,9 @@
     </ClCompile>
     <ClCompile Include="MeasurementData.cpp">
       <Filter>Pliki źródłowe\DataTypesClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="functions.cpp">
+      <Filter>Pliki źródłowe\GlobalMethods</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

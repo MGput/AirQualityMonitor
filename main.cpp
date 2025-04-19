@@ -49,10 +49,10 @@ int main() {
 				stat = new Station(stationList[j]);
 				stat->loadStands();
 				filteredStand = stat->filteredMeasureStand(filter);
-				if (!filteredStand) {
+				if (filteredStand) {
 					stat->displayStationData();
 					filteredStand->displayStandInfo();
-						cout << endl;
+					cout << endl;
 				}
 				delete stat;
 				delete filteredStand;
@@ -112,12 +112,14 @@ int main() {
 				stands[j]->displayStandInfo();
 				getline(cin, input);
 				if (input == "entries") {
+					stands[j]->loadData();
 					data = stands[j]->getStandData();
 					cout << endl;
 					if (data->getValues().empty()) {
 						cout << endl << "	BRAK :(" << endl;
 						break;
 					}
+					cout << "		JAKOŚĆ POWIETRZA WG. DANEGO WSKAŹNIKA: " << stands[j]->getQualityIndex() << endl;
 					cout << "			Data	    |  Wartość" << endl;
 					cout << "		--------------------+------------" << endl;
 					for (size_t k = 0; k < data->getValues().size(); ++k) {

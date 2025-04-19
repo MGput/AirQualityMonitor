@@ -142,7 +142,8 @@ bool Station::checkForInfo(string searchText) const {
 
 MeasurmentStand* Station::filteredMeasureStand(const string& pollutionType) {
 	MeasurmentStand* filteredStand;
-	for (auto& stand : measurmentStands_) {
+	if (measurmentStands_.empty()) loadStands();
+	for (auto stand : measurmentStands_) {
 		cout << pollutionType << " = " << stand->getParamFormula() << " ?		";
 		if (stand->getParamFormula() == pollutionType) {
 			filteredStand = new MeasurmentStand(stand);
