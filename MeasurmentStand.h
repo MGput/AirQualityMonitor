@@ -6,7 +6,6 @@
 #include <iostream>
 #include "APIcontroller.h"
 #include "MeasurementData.h"
-#include "functions.cpp"
 
 using namespace std;
 using json = nlohmann::json;

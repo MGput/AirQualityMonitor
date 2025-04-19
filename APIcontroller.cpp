@@ -10,7 +10,7 @@ void CurlServiceFundaments::initializeCurl() {
     if (!curl) cerr << "Błąd inicjalizacji CURL" << endl;
 }
 
-CurlServiceFundaments::CurlServiceFundaments() {
+CurlServiceFundaments::CurlServiceFundaments(){
     initializeCurl();
 }
 
@@ -25,7 +25,7 @@ size_t CurlServiceFundaments::WriteCallback(void* contents, size_t size, size_t 
 }
 
 json CurlServiceFundaments::makeRequest(const string& url) {
-    json responseFinal;
+    json responseFinal = json();
     if (curl) {
         string responseSingle;
         curl_easy_setopt(curl, CURLOPT_URL, url.c_str());                           // Ustawienie adresu URL
@@ -54,19 +54,52 @@ json CurlServiceFundaments::makeRequest(const string& url) {
     return responseFinal;
 }
 
+GIOS_APImanagement::GIOS_APImanagement() :
+    jsonController_(new jsonController()),
+    internetConnection_(true)
+{}
+
+void GIOS_APImanagement::setConnectionStatus() {
+    cout << "CHCESZ NETA? (t/n)" << endl;
+    string input;
+    do { cin >> input; } while (input != "t" and input != "n");
+    if (input == "n") internetConnection_ = false;
+}
 
 json GIOS_APImanagement::getStationList() {
-    return makeRequest("https://api.gios.gov.pl/pjp-api/rest/station/findAll");
+    setConnectionStatus();
+    if (internetConnection_) {
+        json response = makeRequest("https://api.gios.gov.pl/pjp-api/rest/station/findAll");
+        jsonController_->saveStationList(response);
+        return response;
+    }
+    cerr << "BRAK POŁĄCZENIA Z USŁUGĄ API!!!" << endl;
+    cerr << "ODCZYTYWANIE DANYCH Z PLIKU..." << endl;
+    return jsonController_->loadStationList();
 }
 
 json GIOS_APImanagement::getSensorList(int stationId) {
-    return makeRequest("https://api.gios.gov.pl/pjp-api/rest/station/sensors/" + to_string(stationId));
+    if (internetConnection_) {
+        json response = makeRequest("https://api.gios.gov.pl/pjp-api/rest/station/sensors/" + to_string(stationId));
+        jsonController_->saveSensors(response);
+        return response;
+    }
+    return json();
 }
 
 json GIOS_APImanagement::getSensorData(int sensorId) {
-    return makeRequest("https://api.gios.gov.pl/pjp-api/rest/data/getData/" + to_string(sensorId));
+    if (internetConnection_) {
+        json response = makeRequest("https://api.gios.gov.pl/pjp-api/rest/data/getData/" + to_string(sensorId));
+        jsonController_->saveSensorData(response);
+        return response;
+    }
+    return json();
 }
 
 json GIOS_APImanagement::getAirQualityIndex(int stationId) {
     return makeRequest("https://api.gios.gov.pl/pjp-api/rest/aqindex/getIndex/" + to_string(stationId));
+}
+
+GIOS_APImanagement::~GIOS_APImanagement() {
+	delete jsonController_;
 }

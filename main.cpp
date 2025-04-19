@@ -18,8 +18,10 @@ int main() {
 
     GIOS_APImanagement api;
     json stationList = api.getStationList();
+	cin.get();          // Czyszczenie bufora
+	if (stationList.empty()) return 1;
+	
 	cout << "Liczba stacji: " << stationList.size() << endl;
-
 	for (size_t i = 0; i < stationList.size(); ++i) {
 		stat = new Station(stationList[i]);
 		stat->displayStationData();
@@ -68,8 +70,8 @@ int main() {
 			getline(cin, searchQuery);
 
 			// Przeszukaj wszystkie stacje
-			for (size_t i = 0; i < stationList.size(); ++i) {
-				Station* tempStation = new Station(stationList[i]);
+			for (size_t j = 0; j < stationList.size(); ++j) {
+				Station* tempStation = new Station(stationList[j]);
 				if (tempStation->checkForInfo(searchQuery)) {
 					stationsFound.push_back(tempStation);
 				}
@@ -87,9 +89,9 @@ int main() {
 			else {
 				cout << "Znaleziono " << stationsFound.size() << " pasujących stacji:" << endl;
 
-				for (size_t i = 0; i < stationsFound.size(); ++i) {
+				for (size_t j = 0; j < stationsFound.size(); ++j) {
 					cout << "\nStacja #" << (i + 1) << ":" << endl;
-					stationsFound[i]->displayStationData();
+					stationsFound[j]->displayStationData();
 				}
 			}
 
@@ -100,7 +102,6 @@ int main() {
 			stationsFound.clear();
 
 			delete stat;
-			stat = nullptr;
 			return 0;
 		}
 

@@ -128,7 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="APIcontroller.cpp" />
-    <ClCompile Include="functions.cpp" />
+    <ClCompile Include="jsonController.cpp" />
     <ClCompile Include="Station.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MeasurmentStand.cpp" />

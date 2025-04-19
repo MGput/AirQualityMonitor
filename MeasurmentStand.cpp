@@ -33,10 +33,16 @@ void MeasurmentStand::loadData() {
 	GIOS_APImanagement* API = new GIOS_APImanagement();
 	standData_ = new Data(API->getSensorData(id_));
 	cout << API->getAirQualityIndex(stationId_) << endl << endl;
-	cout << (uncapitalizeString(paramFormula_) + "IndexLevel") << endl;
-	string indexParameter = uncapitalizeString(paramFormula_);
+	string result = paramFormula_;
+	if (!result.empty()) {											// Pętla do zmiany wielkich liter na małe
+		for (size_t i = 0; i < result.length(); i++) {
+			result[i] = tolower(result[i]);
+		}
+	}
+	cout << (result + "IndexLevel") << endl;
+	string indexParameter = result;
 	if (indexParameter == "so2" || indexParameter == "pm10" || indexParameter == "pm25" || indexParameter == "o3" || indexParameter == "no2") {
-		qualityIndex_ = API->getAirQualityIndex(stationId_)[(uncapitalizeString(paramFormula_) + "IndexLevel")]["indexLevelName"].get<string>();
+		qualityIndex_ = API->getAirQualityIndex(stationId_)[(result + "IndexLevel")]["indexLevelName"].get<string>();
 	}
 	else qualityIndex_ = "";
 	delete API;
