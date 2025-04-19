@@ -119,7 +119,9 @@ int main() {
 						cout << endl << "	BRAK :(" << endl;
 						break;
 					}
-					cout << "		JAKOŚĆ POWIETRZA WG. DANEGO WSKAŹNIKA: " << stands[j]->getQualityIndex() << endl;
+					if (stands[j]->getQualityIndex() != "") {
+						cout << "		JAKOŚĆ POWIETRZA WG. DANEGO WSKAŹNIKA: " << stands[j]->getQualityIndex() << endl;
+					}
 					cout << "			Data	    |  Wartość" << endl;
 					cout << "		--------------------+------------" << endl;
 					for (size_t k = 0; k < data->getValues().size(); ++k) {

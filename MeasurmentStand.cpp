@@ -32,8 +32,13 @@ MeasurmentStand::MeasurmentStand(const json& StandEntry) :
 void MeasurmentStand::loadData() {
 	GIOS_APImanagement* API = new GIOS_APImanagement();
 	standData_ = new Data(API->getSensorData(id_));
-	cout << "załadowano dane" << endl;
-	qualityIndex_ = API->getAirQualityIndex(stationId_)[uncapitalizeString(paramFormula_)+"IndexLevel"]["IndexLevelName"].get<string>();
+	cout << API->getAirQualityIndex(stationId_) << endl << endl;
+	cout << (uncapitalizeString(paramFormula_) + "IndexLevel") << endl;
+	string indexParameter = uncapitalizeString(paramFormula_);
+	if (indexParameter == "so2" || indexParameter == "pm10" || indexParameter == "pm25" || indexParameter == "o3" || indexParameter == "no2") {
+		qualityIndex_ = API->getAirQualityIndex(stationId_)[(uncapitalizeString(paramFormula_) + "IndexLevel")]["indexLevelName"].get<string>();
+	}
+	else qualityIndex_ = "";
 	delete API;
 }
 
